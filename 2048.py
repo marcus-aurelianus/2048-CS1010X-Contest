@@ -127,6 +127,7 @@ def merge_left(mat):
     return (mat,is_valid,score)
                        
 #print(merge_left([[2,0,0,0],[0,0,0,0],[0,0,0,0],[2,0,0,0]]))                   
+#print(merge_left([[0, 0, 2, 0], [0, 0, 0, 0], [0, 0, 2, 0], [0, 0, 0, 0]]))                   
 
 
 
@@ -200,7 +201,7 @@ def text_play():
 
 
 # How would you test that the winning condition works?
-# Your answer:
+# Your answer: 1)Play the game till I win. 2) Play the game till I lose, then I know the if clause on status works. Though the second test is easier, I have tried both and they work.
 #
 
 
@@ -234,6 +235,149 @@ def down(state):
 
 
 # Do not edit this #
+#game_logic = {
+#    'make_new_game': make_new_game,
+#    'game_status': game_status,
+#    'get_score': get_score,
+#    'get_matrix': get_matrix,
+#    'up': up,
+#    'down': down,
+#    'left': left,
+#    'right': right,
+#    'undo': lambda state: (state, False)
+#}
+
+# UNCOMMENT THE FOLLOWING LINE TO START THE GAME (WITHOUT UNDO)
+# gamegrid = GameGrid(game_logic)
+
+
+
+
+#################
+#   With Undo   #
+#################
+
+###########
+# Task 5i #
+###########
+
+def make_new_record(mat, increment):
+    return [mat,increment]
+
+def get_record_matrix(record):
+    return record[0]
+
+def get_record_increment(record):
+    return record[1]
+
+############
+# Task 5ii #
+############
+
+def make_new_records():
+    return []
+
+def push_record(new_record, stack_of_records):
+    stack_of_records.append(new_record)
+    return stack_of_record
+
+def is_empty(stack_of_records):
+    return stack_of_records==[]
+
+def pop_record(stack_of_records):
+    last_record=stack_of_records.pop()
+    return last_record
+
+#############
+# Task 5iii #
+#############
+
+# COPY AND UPDATE YOUR FUNCTIONS HERE
+def make_state(matrix, total_score, records):
+    return (matrix,total_score,records)
+
+def get_matrix(state):
+    return state[0]
+
+def get_score(state):
+    return state[1]
+
+def make_new_game(n):
+    mat=add_two(add_two(new_game_matrix(n)))
+    record=make_new_records()
+    return make_state(mat,0,record)
+
+def left(state):
+    matrix=get_matrix(state)
+    new_matrix_result=merge_left(matrix)
+    new_matrix=new_matrix_result[0]
+    valid_move=new_matrix_result[1]
+    increment=(new_matrix_result[2])
+    score=get_score(state)+increment
+    record=make_new_record(matrix, increment)
+    records=get_records(state)
+    records.append(record)
+    if valid_move:
+        new_matrix=add_two(new_matrix)
+    return (make_state(new_matrix,score,records),valid_move)
+
+def right(state):
+    matrix=get_matrix(state)
+    new_matrix_result=merge_right(matrix)
+    new_matrix=new_matrix_result[0]
+    valid_move=new_matrix_result[1]
+    increment=(new_matrix_result[2])
+    score=get_score(state)+increment
+    record=make_new_record(matrix, increment)
+    records=get_records(state)
+    records.append(record)
+    if valid_move:
+        new_matrix=add_two(new_matrix)
+    return (make_state(new_matrix,score,records),valid_move)
+
+def up(state):
+    matrix=get_matrix(state)
+    new_matrix_result=merge_up(matrix)
+    new_matrix=new_matrix_result[0]
+    valid_move=new_matrix_result[1]
+    increment=(new_matrix_result[2])
+    score=get_score(state)+increment
+    record=make_new_record(matrix, increment)
+    records=get_records(state)
+    records.append(record)
+    if valid_move:
+        new_matrix=add_two(new_matrix)
+    return (make_state(new_matrix,score,records),valid_move)
+
+def down(state):
+    matrix=get_matrix(state)
+    new_matrix_result=merge_down(matrix)
+    new_matrix=new_matrix_result[0]
+    valid_move=new_matrix_result[1]
+    increment=(new_matrix_result[2])
+    score=get_score(state)+increment
+    record=make_new_record(matrix, increment)
+    records=get_records(state)
+    records.append(record)
+    if valid_move:
+        new_matrix=add_two(new_matrix)
+    return (make_state(new_matrix,score,records),valid_move)
+
+# NEW FUNCTIONS TO DEFINE
+def get_records(state):
+    return state[2]
+
+def undo(state):
+    stack_of_records=get_records(state)
+    last_record=pop_record(stack_of_records)
+    cur_score=get_score(state)
+    score_increment=get_record_increment(last_record)
+    prev_score=cur_score-score_increment
+    prev_matrix=get_record_matrix(last_record)
+    return (make_state(prev_matrix,prev_score,stack_of_records),True)
+
+
+# UNCOMMENT THE FOLLOWING LINES TO START THE GAME (WITH UNDO)
 game_logic = {
     'make_new_game': make_new_game,
     'game_status': game_status,
@@ -243,95 +387,6 @@ game_logic = {
     'down': down,
     'left': left,
     'right': right,
-    'undo': lambda state: (state, False)
+    'undo': undo
 }
-
-# UNCOMMENT THE FOLLOWING LINE TO START THE GAME (WITHOUT UNDO)
-#gamegrid = GameGrid(game_logic)
-
-
-
-
-#################
-# Optional Task #
-#################
-
-###########
-# Task 5i #
-###########
-
-def make_new_record(mat, increment):
-    "Your answer here"
-
-def get_record_matrix(record):
-    "Your answer here"
-
-def get_record_increment(record):
-    "Your answer here"
-
-############
-# Task 5ii #
-############
-
-def make_new_records():
-    "Your answer here"
-
-def push_record(new_record, stack_of_records):
-    "Your answer here"
-
-def is_empty(stack_of_records):
-    "Your answer here"
-
-def pop_record(stack_of_records):
-    "Your answer here"
-
-#############
-# Task 5iii #
-#############
-
-# COPY AND UPDATE YOUR FUNCTIONS HERE
-def make_state(matrix, total_score, records):
-    "Your answer here"
-
-def get_matrix(state):
-    "Your answer here"
-
-def get_score(state):
-    "Your answer here"
-
-def make_new_game(n):
-    "Your answer here"
-
-def left(state):
-    "Your answer here"
-
-def right(state):
-    "Your answer here"
-
-def up(state):
-    "Your answer here"
-
-def down(state):
-    "Your answer here"
-
-# NEW FUNCTIONS TO DEFINE
-def get_records(state):
-    "Your answer here"
-
-def undo(state):
-    "Your answer here"
-
-
-# UNCOMMENT THE FOLLOWING LINES TO START THE GAME (WITH UNDO)
-##game_logic = {
-##    'make_new_game': make_new_game,
-##    'game_status': game_status,
-##    'get_score': get_score,
-##    'get_matrix': get_matrix,
-##    'up': up,
-##    'down': down,
-##    'left': left,
-##    'right': right,
-##    'undo': undo
-##}
-#gamegrid = GameGrid(game_logic)
+gamegrid = GameGrid(game_logic)
