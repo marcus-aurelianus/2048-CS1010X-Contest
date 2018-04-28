@@ -126,8 +126,7 @@ def merge_left(mat):
 
     return (mat,is_valid,score)
                        
-#print(merge_left([[2,0,0,0],[0,0,0,0],[0,0,0,0],[2,0,0,0]]))                   
-#print(merge_left([[0, 0, 2, 0], [0, 0, 0, 0], [0, 0, 2, 0], [0, 0, 0, 0]]))                   
+print(merge_left([[2, 2, 2, 2], [0, 0, 0, 0], [0, 0, 2, 0], [0, 0, 0, 0]]))                   
 
 
 
@@ -205,33 +204,62 @@ def text_play():
 #
 
 
-##########
-# Task 4 #
-##########
+#####################
+# Without Undo Func #
+#####################
 
-def make_state(matrix, total_score):
-    "Your answer here"
+#def make_state(matrix, total_score):
+#    return (matrix,total_score)
 
-def get_matrix(state):
-    "Your answer here"
+#def get_matrix(state):
+#    return state[0]
 
-def get_score(state):
-    "Your answer here"
+#def get_score(state):
+#    return state[1]
 
-def make_new_game(n):
-    "Your answer here"
+#def make_new_game(n):
+#    mat=add_two(add_two(new_game_matrix(n)))
+#    return make_state(mat,0)
 
-def left(state):
-    "Your answer here"
+#def left(state):
+#    matrix=get_matrix(state)
+#    new_matrix_result=merge_left(matrix)
+#    new_matrix=new_matrix_result[0]
+#    valid_move=new_matrix_result[1]
+#    score=get_score(state)+new_matrix_result[2]
+#    if valid_move:
+#        new_matrix=add_two(new_matrix)
+#    return (make_state(new_matrix,score),valid_move)
 
-def right(state):
-    "Your answer here"
+#def right(state):
+#    matrix=get_matrix(state)
+#    new_matrix_result=merge_right(matrix)
+#    new_matrix=new_matrix_result[0]
+#    valid_move=new_matrix_result[1]
+#    score=get_score(state)+new_matrix_result[2]
+#    if valid_move:
+#        new_matrix=add_two(new_matrix)
+#    return (make_state(new_matrix,score),valid_move)
 
-def up(state):
-    "Your answer here"
+#def up(state):
+#    matrix=get_matrix(state)
+#    new_matrix_result=merge_up(matrix)
+#    new_matrix=new_matrix_result[0]
+#    valid_move=new_matrix_result[1]
+#    score=get_score(state)+new_matrix_result[2]
+#    if valid_move:
+#        new_matrix=add_two(new_matrix)
+#    return (make_state(new_matrix,score),valid_move)
 
-def down(state):
-    "Your answer here"
+#def down(state):
+#    matrix=get_matrix(state)
+#    new_matrix_result=merge_down(matrix)
+#    new_matrix=new_matrix_result[0]
+#    valid_move=new_matrix_result[1]
+#    score=get_score(state)+new_matrix_result[2]
+#    if valid_move:
+#        new_matrix=add_two(new_matrix)
+#    return (make_state(new_matrix,score),valid_move)
 
 
 # Do not edit this #
@@ -389,4 +417,4 @@ game_logic = {
     'right': right,
     'undo': undo
 }
-gamegrid = GameGrid(game_logic)
+# gamegrid = GameGrid(game_logic)
